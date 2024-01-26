@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 const initialFriends = [
   {
     id: 118836,
@@ -19,13 +19,22 @@ const initialFriends = [
     balance: 0,
   },
 ]
+
+function Button({ children, onClick }) {
+  return <button onClick={onClick} className="button">{children}</button>
+}
+
 const App = () => {
+  const [showAddFriend, setShowAddFriend] = useState(false);
+  function handleShowAddFriend() {
+    setShowAddFriend(show => !show)
+  }
   return (
     <div className="app">
       <div className="sidebar">
         <FriendList />
-        <FormAddFriend />
-        <Button>Add friend</Button>
+        {showAddFriend && <FormAddFriend />}
+        <Button onClick={handleShowAddFriend}>{showAddFriend ? "Close" : "Add friend"}</Button>
       </div>
       <FormSplitBill />
     </div>
@@ -66,21 +75,20 @@ function Friend({ friend }) {
   )
 }
 
-function Button({ children }) {
-  return <button className="button">{children}</button>
-}
 
 function FormAddFriend() {
   return (
-    <form className="form-add-friend">
-      <label>👫Friend name</label>
-      <input type="text" />
+  
+      
+       <form form className="form-add-friend" >
+        <label>👫Friend name</label>
+        <input type="text" />
 
-      <label>🌄 Image URL</label>
-      <input type="text" />
+        <label>🌄 Image URL</label>
+        <input type="text" />
 
-      <Button>Add</Button>
-    </form>
+        <Button>Add</Button>
+      </form >
   )
 }
 
@@ -88,17 +96,22 @@ function FormSplitBill() {
   return (
     <form className="form-split-bill">
       <h2>SPLIT A BILL WIH X</h2>
+
       <label>💰 Bill value</label>
       <input type="text" />
+
       <label>🧍‍♀️ Your expense</label>
       <input type="text" />
-      <label >👫 X's expense</label>
-      <input type="text" disabled/>
-        <label>🤑 Who is paying the bill</label>
+
+      <label>👫 X's expense</label>
+      <input type="text" disabled />
+
+      <label>🤑 Who is paying the bill</label>
       <select>
         <option value="user">You</option>
         <option value="friend">X</option>
       </select>
+
       <Button>Split bill</Button>
     </form>
   )
